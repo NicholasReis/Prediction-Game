@@ -1,5 +1,5 @@
 <?php
-
+    include 'connect.php';
 ?>
 
 <html>
@@ -8,8 +8,24 @@
         <link rel="stylesheet" href="style.css" type="text/css">
     </head>
 
+<?php
+    if(isset($_POST["username"])){
+        echo "Set";
+        if($_POST["email"] == ""){
+            $email = "";
+        }else{
+            $email = $_POST["email"];
+        }
+        $query = "INSERT INTO users VALUES(null, '" . $_POST['username'] . "', '". $_POST['pass'] ."', '". $email ."', NOW());";
+        $result = mysqli_query($mysqli, $query);
+        echo "Results in";
+
+    }else{
+        echo "Not set";
+?>
+
     <body>
-        <form>
+        <form action="signup.php" method="POST">
             <label for="username">Username: </label>
             <input type="text" id="username" name="username" required>
             <br>
@@ -32,3 +48,6 @@
         </form>
     </body>
 </html>
+<?php
+}
+?>
