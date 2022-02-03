@@ -15,7 +15,7 @@
 <?php
     if(isset($_POST["username"]) && isset($_POST["pass"])){
         $username = $_POST["username"];
-        $password = $_POST["pass"];
+        $password = password_hash($_POST["pass"], PASSWORD_DEFAULT);
         if($_POST["email"] == ""){
             $email = null;
         }else{
@@ -31,9 +31,8 @@
                 $_SESSION["userid"] = $row[0];
             }
             echo "Account Created";
-        }else{
-            echo "Account creation failed";
         }
+        header("Location: index.php")
 ?>
 
 <?php

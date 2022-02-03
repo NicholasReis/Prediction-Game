@@ -17,12 +17,16 @@
         $username = $_POST["username"];
         $password = $_POST["pass"];
 
-        $query = "SELECT id FROM users WHERE username = '" . $username . "' AND password='" . $password . "';";
+        $query = "SELECT id, password FROM users WHERE username = '" . $username . "';";
         $result = $mysqli -> query($query);
-        if($result -> num_rows == 1){
-            $row = $result -> fetch_array();
+        $row = $result -> fetch_array();
+        $passhash = $row[1];
+
+        if(password_verify($password, $passhash)){
             $_SESSION["userid"] = $row[0];
         }
+
+        
         header("Location: index.php");
     }else{
 ?>
