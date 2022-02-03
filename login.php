@@ -1,4 +1,8 @@
 <?php
+    session_start();
+    if(isset($_SESSION["userid"])){
+        header("Location: index.php");
+    }
     include 'connect.php';
 ?>
 
@@ -10,19 +14,17 @@
 
 <?php
     if(isset($_POST["username"]) && isset($_POST["pass"])){
-        echo "Set";
         $username = $_POST["username"];
         $password = $_POST["pass"];
 
         $query = "SELECT id FROM users WHERE username = '" . $username . "' AND password='" . $password . "';";
         $result = $mysqli -> query($query);
-        if($result -> num_rows > 0){
-            echo "Result Returned";
-        }else{
-            echo "Didn't Work";
+        if($result -> num_rows == 1){
+            $row = $result -> fetch_array();
+            $_SESSION["userid"] = $row[0];
         }
+        header("Location: index.php");
     }else{
-        echo "Not set";
 ?>
 
     <body>
